@@ -60,10 +60,17 @@ public class Main {
     {
         Graph<String, DefaultEdge> g = new SimpleGraph<>(DefaultEdge.class);
 
-        String v1 = "v1";
-        String v2 = "v2";
-        String v3 = "v3";
-        String v4 = "v4";
+        String v = "THANKSGIVING";
+
+        StringTokenizer st = new StringTokenizer(v);
+
+        while (st.hasMoreTokens()) {
+            g.addVertex(st.nextToken());
+        }
+        st = new StringTokenizer(v);
+        while (st.hasMoreTokens()) {
+            g.addEdge(st.nextToken());
+        }
 
         // add the vertices
         g.addVertex(v1);
