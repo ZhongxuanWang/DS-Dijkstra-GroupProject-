@@ -13,12 +13,11 @@ import java.util.*;
 
 public class Main {
     public static boolean stop = false;
-    public static boolean debug = false;
+    public static boolean debug = true;
 
     public static void main(String[] args) throws IOException, ExportException, URISyntaxException {
-
-        Graph<String, DefaultEdge> stringGraph;
-
+        Map<String> map = new Map<>(debug);
+        map.mapTraversalDepthFirst();
         System.out.println("-- toString output");
         // System.out.println(stringGraph.toString());
         System.out.println();

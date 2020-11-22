@@ -1,4 +1,13 @@
+import org.jgrapht.Graph;
+import org.jgrapht.generate.GnmRandomGraphGenerator;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleGraph;
+import org.jgrapht.traverse.DepthFirstIterator;
+import org.jgrapht.util.SupplierUtil;
+
+import java.util.Iterator;
 import java.util.Queue;
+import java.util.function.Supplier;
 
 public class PriorityQueue {
 
@@ -24,16 +33,18 @@ public class PriorityQueue {
 
         Node node = root;
         Node newNode = new Node(distance, null);
-        if (node.next == null) {
-            if (newNode.distance < node.distance) {
-                newNode.next = node;
-                root = newNode;
-            }
-            return;
+        if (newNode.distance < node.distance) {
+            newNode.next = node;
+            root = newNode;
         }
 
         while (node.next != null) {
             node = node.next;
+            if (newNode.distance < node.distance) {
+                
+            }
+
         }
+
     }
 }
