@@ -29,7 +29,7 @@ public class Map<T> {
         if (random) {
             g = new GnmRandomGraphGenerator<>(12,24);
         } else {
-            g = new GnmRandomGraphGenerator<>(12,24,1);
+            g = new GnmRandomGraphGenerator<>(12,24,2);
         }
         g.generateGraph(graph);
     }
@@ -41,14 +41,6 @@ public class Map<T> {
             T vertex = iter.next();
             System.out.println(
                     "Vertex " + vertex + " is connected to: "
-                            + graph.edgesOf(vertex).toString()
-            );
-        }
-        iter = new DepthFirstIterator<>(graph);
-        while (iter.hasNext()) {
-            T vertex = iter.next();
-            System.out.println(
-                    "adf " + vertex + " is connected to: "
                             + graph.edgesOf(vertex).toString()
             );
         }
