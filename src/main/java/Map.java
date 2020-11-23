@@ -1,10 +1,13 @@
 import org.jgrapht.Graph;
+import org.jgrapht.GraphPath;
+import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.generate.GnmRandomGraphGenerator;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultUndirectedGraph;
 import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.traverse.DepthFirstIterator;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.function.Supplier;
@@ -19,6 +22,7 @@ public class Map {
     Graph<String, DistanceEdge> graph = new DefaultUndirectedGraph<>(DistanceEdge.class);
     String start = "";
     String end = "";
+    String now = "";
 
     Map (boolean random) {
         int[] arr;
@@ -74,10 +78,38 @@ public class Map {
 
     public void setStart(String start) {
         this.start = start;
+        setNow(start);
     }
 
     public void setEnd(String end) {
         this.end = end;
+    }
+
+    public void setNow(String now) {
+        this.now = now;
+    }
+
+    public void summary() {
+        if (start.isEmpty() || end.isEmpty()) {
+            System.out.println("HEY! Why would you want a summary if you haven't told your starting or ending " +
+                    "point yet ?! ");
+            return;
+        }
+        DijkstraShortestPath<String, DistanceEdge> dijkstraAlg = new DijkstraShortestPath<>(graph);
+
+        int total_dis_jgrapht = 0;
+
+        for (DistanceEdge edge : dijkstraAlg.getPaths(start).getPath(end).getEdgeList()) {
+            total_dis_jgrapht += edge.dis;
+        }
+        System.out.println("-".repeat(70));
+        System.out.printf("Summary!\n" +
+                "Our Dijkstra Min Distance: %s \n" +
+                "JGraphT Dijkstra Min Distance: %s\n", total_dis, total_dis_jgrapht);
+        if (total_dis_jgrapht != total_dis) {
+            System.out.println("HOLD ON!! What just happened!?");
+        }
+        System.out.println("-".repeat(70));
     }
 
     void mapTraversalDepthFirst() {
