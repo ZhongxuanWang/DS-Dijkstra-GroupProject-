@@ -16,10 +16,32 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         Map map = new Map(!debug);
+        System.out.println("Hello! Welcome to Dijkstra Crazy Turkey Project! ");
+        System.out.println("This, is your map encoded with String! ");
+
         map.mapTraversalDepthFirst();
-        System.out.println("-- toString output");
-        // System.out.println(stringGraph.toString());
-        System.out.println();
+        System.out.println("Pretty amazing isn't ? \n" +
+                "-".repeat(70));
+
+        System.out.println("Give us your Starting point! (eg.A)");
+        String start = "";
+        while (start.length() != 1) {
+            start = getInput().toUpperCase();
+        }
+        map.setStart(start);
+
+        System.out.println("Give us your Ending point! (eg.L)");
+        String end = "";
+        while (end.length() != 1) {
+            end = getInput().toUpperCase();
+        }
+        map.setEnd(end);
+
+
+
+
+
+
 
 
         while (!stop) {
@@ -35,6 +57,7 @@ public class Main {
     }
 
     public static void loop() {
+        getInput();
         stop = true;
     }
 
@@ -42,9 +65,13 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.print(">");
         try {
-            return reader.readLine();
+            String re = reader.readLine();
+            if (re.isEmpty())
+                System.out.println("Why?! Why give me a blank answer so my software would crash?!");
+            return re;
         } catch (final Exception e) {
             return "";
         }
     }
+
 }

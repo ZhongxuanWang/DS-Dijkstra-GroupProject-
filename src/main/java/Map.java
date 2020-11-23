@@ -1,7 +1,7 @@
 import org.jgrapht.Graph;
 import org.jgrapht.generate.GnmRandomGraphGenerator;
-import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.DefaultUndirectedGraph;
 import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.traverse.DepthFirstIterator;
 
@@ -16,7 +16,9 @@ import java.util.function.Supplier;
 public class Map {
     // By default 'SimpleGraph' is undirected
     int total_dis = 0;
-    Graph<String, DistanceEdge> graph = new DefaultDirectedGraph<>(DistanceEdge.class);
+    Graph<String, DistanceEdge> graph = new DefaultUndirectedGraph<>(DistanceEdge.class);
+    String start = "";
+    String end = "";
 
     Map (boolean random) {
         int[] arr;
@@ -68,6 +70,14 @@ public class Map {
         graph.addEdge("K", "L", new DistanceEdge(arr[21]));
 
 
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public void setEnd(String end) {
+        this.end = end;
     }
 
     void mapTraversalDepthFirst() {
