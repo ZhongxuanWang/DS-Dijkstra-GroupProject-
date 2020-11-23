@@ -23,20 +23,38 @@ public class Main {
                 "-".repeat(70));
 
 
+        System.out.println("Select Your Preferable Mode!\n" +
+                "1. Me-as-a-navigator mode (for PrepWork/being bored only)\n" +
+                "2. Dijkstra-shortest-pathfinding mode");
 
+        if (getInput().equals("1")) {
+            System.out.println("You are now in the 1st Mode!");
+            while (!stop) {
+                int liveDistance = 0;
+                loop();
+                while (!stop) {
+                    map.liveSummary();
 
+                    String stringSet = map.availableRoutesSet();
+                    System.out.printf("Where would you wanna go?! (%s) \n", stringSet);
+                    String dest = getInput();
 
-
-
-
-        while (!stop) {
-            loop();
-            map.dijkstraFind();
-            map.summary();
-            System.out.println("-".repeat(70));
+                    if (!stringSet.contains(dest)) {
+                        System.out.println("No! Don't fool me!");
+                        continue;
+                    }
+                    map.goTo(dest);
+                }
+            }
+        } else {
+            System.out.println("You are now in the 2nd Mode!");
+            while (!stop) {
+                loop();
+                map.dijkstraFind();
+                map.summary();
+                System.out.println("-".repeat(70));
+            }
         }
-        //
-        // Map map = new Map(debug);
 
 
 
@@ -58,8 +76,6 @@ public class Main {
             end = getInput().toUpperCase();
         }
         map.setEnd(end);
-
-        stop = true;
     }
 
     public static String getInput() {
@@ -69,6 +85,8 @@ public class Main {
             String re = reader.readLine();
             if (re.isEmpty()) {
                 System.out.println("Why?! Why give me a blank answer so my software would crash?!");
+                System.exit(0);
+                // return new String[] {"A", "B", "C", "D", "E"}[(int)(Math.random() * 5)];
             }
             return re;
         } catch (final Exception e) {

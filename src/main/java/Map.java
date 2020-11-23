@@ -1,5 +1,7 @@
 import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
+import org.jgrapht.Graphs;
+import org.jgrapht.alg.connectivity.ConnectivityInspector;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.generate.GnmRandomGraphGenerator;
 import org.jgrapht.graph.DefaultEdge;
@@ -7,10 +9,7 @@ import org.jgrapht.graph.DefaultUndirectedGraph;
 import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.traverse.DepthFirstIterator;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Random;
+import java.util.*;
 import java.util.function.Supplier;
 
 /**
@@ -21,6 +20,7 @@ public class Map {
     // By default 'SimpleGraph' is undirected
     int total_dis = 0;
     Graph<String, DistanceEdge> graph = new DefaultUndirectedGraph<>(DistanceEdge.class);
+    ConnectivityInspector<String, DistanceEdge> inspector = new ConnectivityInspector<>(graph);
     String start = "";
     String end = "";
     String now = "";
@@ -121,7 +121,6 @@ public class Map {
     }
 
     void mapTraversalDepthFirst() {
-        // Print out the graph to be sure it's really complete
         Iterator<String> iter = new DepthFirstIterator<>(graph);
         while (iter.hasNext()) {
             String vertex = iter.next();
@@ -139,6 +138,35 @@ public class Map {
 
         System.out.println(graph.getAllEdges(start, end));
         // arrayList.add();
+    }
+
+    String availableRoutesSet() {
+        HashMap<String, Integer> hashMap = new HashMap<>(5,1);
+        for (String str : Graphs.neighborListOf(graph, now)) {
+            hashMap.put(str, graph.getEdge(now, str).dis);
+        }
+        return hashMap.toString();
+    }
+
+
+    /**
+     * For mode 1
+     *
+     * Prerequisite: Valid direct connection
+     */
+    void goTo(String dest) {
+        total_dis += graph.getEdge(now, dest).dis;
+        now = dest;
+        if (now.equals(end)) {
+            System.out.println("What?! You have reached your destination?!! You are so unbelievable! ");
+            liveSummary();
+            Main.stop = true;
+        }
+    }
+
+    void liveSummary() {
+        System.out.printf("You are now at: %s (aim:%s) \n", now, end);
+        System.out.printf("Distance covered: %s \n", total_dis);
     }
 
     static class DistanceEdge extends DefaultEdge {
