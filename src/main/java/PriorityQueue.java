@@ -18,33 +18,37 @@ public class PriorityQueue {
      */
 
     Node root;
-    int size;
 
     PriorityQueue() {
-        this.size = 0;
+
     }
 
-    public void add(int distance, String from, String to) {
+    public void add(int distance, String to, String from) {
         if (root == null) {
-            root = new Node(distance, to, from, null);
-            size ++;
+            root = new Node(distance, to, from);
             return;
         }
 
         Node node = root;
-        Node newNode = new Node(distance, to, from, null);
+        Node newNode = new Node(distance, to, from);
         if (newNode.distance < node.distance) {
             newNode.next = node;
             root = newNode;
         }
 
         while (node.next != null) {
-            node = node.next;
-            if (newNode.distance < node.distance) {
-                
+            if (newNode.distance > node.next.distance) {
+                Node temp = node.next;
+                newNode.setNext(node.next.next);
+                // Avoid any kinds of memory add mess!
+                node.setNext(new Node(temp.distance, temp.to, temp.from, newNode));
             }
-
         }
 
     }
+
+    public void clear() {
+        this.root = null;
+    }
+
 }

@@ -20,6 +20,10 @@ class Node {
         this.to = to;
     }
 
+    public void setNext(Node next) {
+        this.next = next;
+    }
+
     @Override
     public String toString() {
         return "Node=" + distance + " hasNext=" + (next != null);
