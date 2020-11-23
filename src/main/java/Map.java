@@ -1,16 +1,12 @@
 import org.jgrapht.Graph;
-import org.jgrapht.GraphPath;
 import org.jgrapht.Graphs;
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
-import org.jgrapht.generate.GnmRandomGraphGenerator;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultUndirectedGraph;
-import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.traverse.DepthFirstIterator;
 
 import java.util.*;
-import java.util.function.Supplier;
 
 /**
  * 12 nodes

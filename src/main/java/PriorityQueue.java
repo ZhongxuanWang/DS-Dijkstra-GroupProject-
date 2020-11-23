@@ -1,9 +1,7 @@
-
 /**
  * It's also called heap!
  *
  */
-
 public class PriorityQueue {
 
     /**
