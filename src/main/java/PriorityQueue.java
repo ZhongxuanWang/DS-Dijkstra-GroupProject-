@@ -1,18 +1,17 @@
-import org.jgrapht.Graph;
-import org.jgrapht.generate.GnmRandomGraphGenerator;
-import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleGraph;
-import org.jgrapht.traverse.DepthFirstIterator;
-import org.jgrapht.util.SupplierUtil;
 
-import java.util.Iterator;
-import java.util.Queue;
-import java.util.function.Supplier;
+/**
+ * It's also called heap!
+ *
+ */
 
 public class PriorityQueue {
 
     /**
      * A priority Queue in Java, designed for Dijkstra.
+     *
+     * Despite its name contains the word "queue", its behavior is different than Queue. (also priorityQueue = Heap)
+     *
+     * It doesn't follow Queue's methods, and it doesn't follow FIFO Rule as well.
      *
      * - Under the scene, it uses a LinkedList, with the root represents the smallest value
      */
@@ -23,32 +22,63 @@ public class PriorityQueue {
 
     }
 
-    public void add(int distance, String to, String from) {
+    public void push(int distance, String to, String from) {
         if (root == null) {
             root = new Node(distance, to, from);
             return;
         }
 
-        Node node = root;
         Node newNode = new Node(distance, to, from);
-        if (newNode.distance < node.distance) {
-            newNode.next = node;
+        if (newNode.distance < root.distance) {
+            newNode.next = new Node(root.distance, root.to, root.from, root.next);
             root = newNode;
+            return;
+        } else if (root.next == null) {
+            root.setNext(newNode);
+            return;
         }
 
-        while (node.next != null) {
-            if (newNode.distance > node.next.distance) {
-                Node temp = node.next;
-                newNode.setNext(node.next.next);
-                // Avoid any kinds of memory add mess!
-                node.setNext(new Node(temp.distance, temp.to, temp.from, newNode));
-            }
-        }
+        Node node = root;
 
+        while (node.next != null && newNode.distance > node.next.distance) {
+            node = node.next;
+        }
+        // newNode<=thisNode.next && node.next == null
+        if (node.next == null) {
+            node.setNext(newNode);
+            return;
+        }
+        newNode.setNext(node.next);
+        // Avoid any kinds of memory add mess!
+        node.setNext(newNode);
+    }
+
+    public Node pop() {
+        if (root == null)
+            return null;
+
+        Node node = new Node(root.distance, root.to, root.from);
+        root = root.next;
+        return node;
+    }
+
+    public Node peek() {
+        return root;
     }
 
     public void clear() {
         this.root = null;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        Node node = root;
+        while (node != null) {
+            stringBuilder.append(node.toString()).append(" || ");
+            node = node.next;
+        }
+        return stringBuilder.toString();
     }
 
     static class Node {

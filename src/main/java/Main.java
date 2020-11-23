@@ -31,6 +31,7 @@ public class Main {
 
         while (!stop) {
             loop();
+            map.dijkstraFind();
             map.summary();
             System.out.println("-".repeat(70));
         }

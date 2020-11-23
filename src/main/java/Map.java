@@ -7,6 +7,7 @@ import org.jgrapht.graph.DefaultUndirectedGraph;
 import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.traverse.DepthFirstIterator;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Random;
@@ -23,6 +24,8 @@ public class Map {
     String start = "";
     String end = "";
     String now = "";
+
+    boolean dijkstraSwitch = false;
 
     Map (boolean random) {
         int[] arr;
@@ -95,6 +98,10 @@ public class Map {
                     "point yet ?! ");
             return;
         }
+        if (!dijkstraSwitch) {
+            System.out.println("Hey! Haven't ran our Dijkstra yet, why would you want our summary!? ");
+            return;
+        }
         DijkstraShortestPath<String, DistanceEdge> dijkstraAlg = new DijkstraShortestPath<>(graph);
 
         int total_dis_jgrapht = 0;
@@ -110,6 +117,7 @@ public class Map {
             System.out.println("HOLD ON!! What just happened!?");
         }
         System.out.println("-".repeat(70));
+        dijkstraSwitch = false;
     }
 
     void mapTraversalDepthFirst() {
@@ -122,6 +130,15 @@ public class Map {
                             + graph.edgesOf(vertex).toString()
             );
         }
+    }
+
+    void dijkstraFind() {
+        ArrayList<String> arrayList = new ArrayList<>();
+        dijkstraSwitch = true;
+
+
+        System.out.println(graph.getAllEdges(start, end));
+        // arrayList.add();
     }
 
     static class DistanceEdge extends DefaultEdge {
