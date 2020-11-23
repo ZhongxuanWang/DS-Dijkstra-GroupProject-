@@ -4,9 +4,20 @@ class Node {
     Node next;
     int distance;
 
-    Node (int distance, Node next) {
+    String to;
+    String from;
+
+    Node (int distance, String to, String from) {
+        this.distance = distance;
+        this.from = from;
+        this.to = to;
+    }
+
+    Node (int distance, String to, String from, Node next) {
         this.distance = distance;
         this.next = next;
+        this.from = from;
+        this.to = to;
     }
 
     @Override

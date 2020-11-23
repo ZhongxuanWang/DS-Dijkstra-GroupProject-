@@ -24,15 +24,15 @@ public class PriorityQueue {
         this.size = 0;
     }
 
-    public void add(int distance) {
+    public void add(int distance, String from, String to) {
         if (root == null) {
-            root = new Node(distance, null);
+            root = new Node(distance, to, from, null);
             size ++;
             return;
         }
 
         Node node = root;
-        Node newNode = new Node(distance, null);
+        Node newNode = new Node(distance, to, from, null);
         if (newNode.distance < node.distance) {
             newNode.next = node;
             root = newNode;
