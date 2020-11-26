@@ -36,18 +36,13 @@ public class Map {
                 arr[i] = (int) (Math.random() * 11 + 1);
         }
 
-        graph.addVertex("A");
-        graph.addVertex("B");
-        graph.addVertex("C");
-        graph.addVertex("D");
-        graph.addVertex("E");
-        graph.addVertex("F");
-        graph.addVertex("G");
-        graph.addVertex("H");
-        graph.addVertex("I");
-        graph.addVertex("J");
-        graph.addVertex("K");
-        graph.addVertex("L");
+        for (String v : new String[] {
+                "A", "B", "C", "D", "E",
+                "F", "G", "H", "I", "J",
+                "K", "L"
+        }) {
+            graph.addVertex(v);
+        }
 
         graph.addEdge("A", "B", new DistanceEdge(arr[0]));
         graph.addEdge("A", "G", new DistanceEdge(arr[1]));
@@ -128,6 +123,45 @@ public class Map {
     }
 
     void dijkstraFind() {
+        // Initialize
+        HashSet<String> unvisitedNodes = new HashSet<>(13,1);
+        unvisitedNodes.addAll(
+                Arrays.asList(
+                        "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"
+                )
+        );
+
+        unvisitedNodes.remove(start);
+        //      Node    Cost
+        HashMap<NodePair, Integer> nodeTable = new HashMap<>(13,1);
+
+        for (String e : unvisitedNodes) {
+            nodeTable.put(new NodePair(e), Integer.MAX_VALUE);
+        }
+
+        nodeTable.put(new NodePair(start), 0);
+
+        // Begin!
+
+        PriorityQueue queue = new PriorityQueue();
+
+        String nowTemp = now;
+        boolean stop = false;
+
+        while (!stop) {
+            for (DistanceEdge edge : graph.edgesOf(nowTemp)) {
+                String target = edge.getTarget();
+                if (edge.dis > nodeTable.get(target)) {
+                    // nodeTable.put(target)
+                }
+            }
+            stop = true;
+        }
+
+
+
+
+
         ArrayList<String> arrayList = new ArrayList<>();
         dijkstraSwitch = true;
 
@@ -173,8 +207,48 @@ public class Map {
         }
 
         @Override
+        public String getSource() {
+            return (String) super.getSource();
+        }
+
+        @Override
+        public String getTarget() {
+            return (String) super.getTarget();
+        }
+
+        @Override
         public String toString() {
             return "(" + getSource() + " : " + getTarget() + " : " + dis + ")";
+        }
+    }
+
+    static class NodePair {
+        String source;
+        String target;
+
+        NodePair(String source) {
+            this.source = source;
+            this.target = null;
+        }
+
+        NodePair(String source, String target) {
+            this.source = source;
+            this.target = target;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof NodePair)) return false;
+            NodePair nodePair = (NodePair) o;
+            return source.equals(nodePair.source) && target.equals(nodePair.target);
+        }
+
+        @Override
+        public int hashCode() {
+            // The multiple of 7 here just to help us generate a more unique hashcode,
+            //  try to avoid hash collision in our hashmap.
+            return this.source.hashCode() * 7  + this.target.hashCode();
         }
     }
 }
