@@ -5,7 +5,7 @@ public class Main {
     public static Map map = new Map(false);
 
     public static void main(String[] args) throws IOException {
-        System.out.println("Hello! Welcome to Dijkstra Crazy Turkey Project! ");
+        System.out.println("Hello! Welcome to Dijkstra Project! ");
         System.out.println("This, is your map encoded with String! ");
 
         map.mapTraversalDepthFirst();
