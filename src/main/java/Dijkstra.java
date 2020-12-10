@@ -1,5 +1,4 @@
 import org.jgrapht.Graph;
-import org.jgrapht.alg.connectivity.ConnectivityInspector;
 
 public class Dijkstra {
     Map map;
@@ -23,6 +22,9 @@ public class Dijkstra {
 
         }
 
+    }
+    public void findShortestPath() {
+        findShortestPath(map.start, map.end);
     }
 
 

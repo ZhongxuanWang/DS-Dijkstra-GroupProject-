@@ -1,13 +1,6 @@
 import java.io.*;
 import org.jgrapht.Graph;
-import org.jgrapht.Graphs;
-import org.jgrapht.alg.connectivity.ConnectivityInspector;
-import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
-import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultUndirectedGraph;
-import org.jgrapht.traverse.DepthFirstIterator;
-
-import java.util.*;
 
 public class Main {
     public static boolean stop = false;
@@ -62,7 +55,7 @@ public class Main {
             System.out.println("You are now in the 2nd Mode!");
             while (!stop) {
                 loop();
-                map.dijkstraFind();
+                dijkstra.findShortestPath();
                 map.summary();
                 System.out.println("-".repeat(70));
             }
