@@ -19,6 +19,8 @@ public class Dijkstra {
 
             String another = edge.getAnother(placeNow);
 
+            queue.push(edge.dis, placeNow, another);
+
 
         }
 

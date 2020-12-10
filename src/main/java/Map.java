@@ -115,6 +115,7 @@ public class Map {
         }
     }
 
+    @Deprecated
     void dijkstraFind() {
         // Initialize
         HashSet<String> unvisitedNodes = new HashSet<>(13,1);

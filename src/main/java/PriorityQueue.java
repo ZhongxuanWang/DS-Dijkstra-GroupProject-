@@ -2,6 +2,7 @@
  * It's also called heap!
  *
  */
+@Deprecated
 public class PriorityQueue {
 
     /**
@@ -28,6 +29,10 @@ public class PriorityQueue {
 
         Node newNode = new Node(distance, to, from);
         if (newNode.distance < root.distance) {
+            if (newNode.equalPath(root)) {
+                root.distance = distance;
+                return;
+            }
             newNode.next = new Node(root.distance, root.to, root.from, root.next);
             root = newNode;
             return;
@@ -38,10 +43,13 @@ public class PriorityQueue {
 
         Node node = root;
 
-        while (node.next != null && newNode.distance > node.next.distance) {
+        while (node.next != null && newNode.distance > node.next.distance && !newNode.equalPath(node)) {
             node = node.next;
         }
         // newNode<=thisNode.next && node.next == null
+        if (node.equalPath(newNode)) {
+            node.distance = newNode.distance;
+        }
         if (node.next == null) {
             node.setNext(newNode);
             return;

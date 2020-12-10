@@ -31,4 +31,12 @@ class Node {
     public boolean equals(Object o) {
         return distance == ((Node) o).distance;
     }
+
+    public boolean equalPath(Node node) {
+        return this.to.equals(node.to) && this.from.equals(node.from);
+    }
+
+    public boolean equalPath(String from, String to) {
+        return this.to.equals(to) && this.from.equals(from);
+    }
 }
