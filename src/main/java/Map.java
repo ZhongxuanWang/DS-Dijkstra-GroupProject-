@@ -130,10 +130,10 @@ public class Map {
         HashMap<NodePair, Integer> nodeTable = new HashMap<>(13,1);
 
         for (String e : unvisitedNodes) {
-            nodeTable.put(new NodePair(e), Integer.MAX_VALUE);
+            // nodeTable.put(new NodePair(e), Integer.MAX_VALUE);
         }
 
-        nodeTable.put(new NodePair(start), 0);
+        // nodeTable.put(new NodePair(start), 0);
 
         // Begin!
 
@@ -191,35 +191,5 @@ public class Map {
     void liveSummary() {
         System.out.printf("You are now at: %s (aim:%s) \n", now, end);
         System.out.printf("Distance covered: %s \n", total_dis);
-    }
-
-    static class NodePair {
-        String source;
-        String target;
-
-        NodePair(String source) {
-            this.source = source;
-            this.target = null;
-        }
-
-        NodePair(String source, String target) {
-            this.source = source;
-            this.target = target;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof NodePair)) return false;
-            NodePair nodePair = (NodePair) o;
-            return source.equals(nodePair.source) && target.equals(nodePair.target);
-        }
-
-        @Override
-        public int hashCode() {
-            // The multiple of 7 here just to help us generate a more unique hashcode,
-            //  try to avoid hash collision in our hashmap.
-            return this.source.hashCode() * 7  + this.target.hashCode();
-        }
     }
 }
