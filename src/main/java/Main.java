@@ -1,10 +1,32 @@
 import java.io.*;
+import org.jgrapht.Graph;
+import org.jgrapht.Graphs;
+import org.jgrapht.alg.connectivity.ConnectivityInspector;
+import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.DefaultUndirectedGraph;
+import org.jgrapht.traverse.DepthFirstIterator;
+
+import java.util.*;
 
 public class Main {
     public static boolean stop = false;
-    public static Map map = new Map(false);
+    public static Map map;
 
     public static void main(String[] args) throws IOException {
+
+        Graph<String, DistanceEdge> graph = new DefaultUndirectedGraph<>(DistanceEdge.class);
+        for (String v : new String[] {
+                "A", "B", "C", "D", "E",
+                "F", "G", "H", "I", "J",
+                "K", "L"
+        }) {
+            graph.addVertex(v);
+        }
+
+        Dijkstra dijkstra  = new Dijkstra(graph, false);
+        map = dijkstra.map;
+
         System.out.println("Hello! Welcome to Dijkstra Project! ");
         System.out.println("This, is your map encoded with String! ");
 

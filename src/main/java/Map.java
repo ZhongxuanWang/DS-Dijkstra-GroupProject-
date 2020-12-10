@@ -23,7 +23,8 @@ public class Map {
 
     boolean dijkstraSwitch = false;
 
-    Map (boolean random) {
+    Map (Graph<String, DistanceEdge> g, boolean random) {
+        graph = g;
         int[] arr;
         if (!random) {
             arr = new int[] {
@@ -34,14 +35,6 @@ public class Map {
             arr = new int[22];
             for (int i = 0; i <= 21; i++)
                 arr[i] = (int) (Math.random() * 11 + 1);
-        }
-
-        for (String v : new String[] {
-                "A", "B", "C", "D", "E",
-                "F", "G", "H", "I", "J",
-                "K", "L"
-        }) {
-            graph.addVertex(v);
         }
 
         graph.addEdge("A", "B", new DistanceEdge(arr[0]));
@@ -197,29 +190,6 @@ public class Map {
     void liveSummary() {
         System.out.printf("You are now at: %s (aim:%s) \n", now, end);
         System.out.printf("Distance covered: %s \n", total_dis);
-    }
-
-    static class DistanceEdge extends DefaultEdge {
-        public final int dis;
-
-        public DistanceEdge(int distance) {
-            this.dis = distance;
-        }
-
-        @Override
-        public String getSource() {
-            return (String) super.getSource();
-        }
-
-        @Override
-        public String getTarget() {
-            return (String) super.getTarget();
-        }
-
-        @Override
-        public String toString() {
-            return "(" + getSource() + " : " + getTarget() + " : " + dis + ")";
-        }
     }
 
     static class NodePair {
