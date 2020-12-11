@@ -3,9 +3,7 @@ import java.util.PriorityQueue;
 public class PriorityQueuePro {
     PriorityQueue<NodePair> queue = new PriorityQueue<>();
 
-    public PriorityQueuePro() {
-
-    }
+    public PriorityQueuePro() {}
 
     public void push(NodePair pair) {
         final boolean[] updated = new boolean[1];
@@ -22,6 +20,16 @@ public class PriorityQueuePro {
     public void display() {
         System.out.println(queue);
     }
+
+    public boolean remove(NodePair pair) {
+        return queue.remove(pair);
+    }
+
+    public void clear() {queue.clear();}
+
+    public NodePair peek() {return queue.peek();}
+
+    public NodePair poll() {return queue.poll();}
 
     @Override
     public String toString() {
