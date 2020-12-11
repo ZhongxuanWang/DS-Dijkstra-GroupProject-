@@ -10,6 +10,15 @@ class NodePair implements Comparable<NodePair>{
         this.dis = dis;
     }
 
+    /**
+     * Precondition: assume o is a pair
+     * @param o another
+     * @return another
+     */
+    public String another(String o) {
+        return o.equals(source) ? target : source;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

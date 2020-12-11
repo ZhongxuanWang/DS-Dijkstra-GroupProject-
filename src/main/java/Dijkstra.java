@@ -1,5 +1,7 @@
 import org.jgrapht.Graph;
 
+import java.util.HashSet;
+
 public class Dijkstra {
     Map map;
 
@@ -12,17 +14,28 @@ public class Dijkstra {
     }
 
     public void findShortestPath(String origin, String target) {
-        PriorityQueue queue = new PriorityQueue();
+        PriorityQueuePro queue = new PriorityQueuePro();
         String placeNow = origin;
+
+        HashSet<String> knownPairs = new HashSet<>(12,2);
+        knownPairs.add(placeNow);
 
         for (DistanceEdge edge: map.graph.edgesOf(placeNow)) {
 
             String another = edge.getAnother(placeNow);
+            if (knownPairs.contains(another))
+                continue;
 
-            queue.push(edge.dis, placeNow, another);
+            PriorityQueuePro adjacentQueue = new PriorityQueuePro();
+            // TODO ABOVE IS WHAT I LEFT OFF
 
+            NodePair pair = new NodePair(placeNow, another, edge.dis);
 
+            queue.push(pair);
         }
+        placeNow = queue.peek().another(placeNow);
+        knownPairs.add(placeNow);
+
 
     }
     public void findShortestPath() {
