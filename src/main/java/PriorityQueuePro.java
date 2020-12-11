@@ -6,6 +6,7 @@ public class PriorityQueuePro {
     public PriorityQueuePro() {}
 
     public void push(NodePair pair) {
+        // Java lambda + final array to exchange result
         final boolean[] updated = new boolean[1];
         queue.forEach((nodePair -> {
             if (nodePair.equals(pair)) {
@@ -13,8 +14,13 @@ public class PriorityQueuePro {
                 updated[0] = true;
             }
         }));
+
         if (!updated[0])
             queue.add(pair);
+
+        if (Main.debug)
+            System.out.println("A Pushing operation just executed: " + pair);
+            display();
     }
 
     public void display() {
@@ -22,7 +28,10 @@ public class PriorityQueuePro {
     }
 
     public boolean remove(NodePair pair) {
-        return queue.remove(pair);
+        boolean r = queue.remove(pair);
+        System.out.println("A Removal operation just executed: " + pair);
+        display();
+        return r;
     }
 
     public void clear() {queue.clear();}

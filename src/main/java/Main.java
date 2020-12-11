@@ -3,6 +3,8 @@ import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultUndirectedGraph;
 
 public class Main {
+    final public static boolean debug = true; // If the hw is under grading, please leave it as true!
+
     public static boolean stop = false;
     public static Map map;
 
@@ -17,7 +19,7 @@ public class Main {
             graph.addVertex(v);
         }
 
-        Dijkstra dijkstra  = new Dijkstra(graph, false);
+        Dijkstra dijkstra  = new Dijkstra(graph, !debug);
         map = dijkstra.map;
 
         System.out.println("Hello! Welcome to Dijkstra Project! ");
