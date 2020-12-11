@@ -1,4 +1,4 @@
-class NodePair implements Comparable<Integer>{
+class NodePair implements Comparable<NodePair>{
 
     int dis;
     String source;
@@ -6,7 +6,7 @@ class NodePair implements Comparable<Integer>{
 
     NodePair(String source, String target, int dis) {
         this.source = source;
-        this.target = null;
+        this.target = target;
         this.dis = dis;
     }
 
@@ -22,11 +22,11 @@ class NodePair implements Comparable<Integer>{
     public int hashCode() {
         // The multiple of 7 here just to help us generate a more unique hashcode,
         //  try to avoid hash collision in our hashmap.
-        return this.source.hashCode() * 7  + this.target.hashCode();
+        return this.source.hashCode() * 7  + this.target.hashCode() + this.dis * 11;
     }
 
     @Override
-    public int compareTo(Integer o) {
-        return Integer.compare(dis, o);
+    public int compareTo(NodePair o) {
+        return Integer.compare(dis, o.dis);
     }
 }

@@ -1,10 +1,10 @@
 public class Test {
     public static void main(String[] args) {
-        PriorityQueue queue = new PriorityQueue();
-        queue.push(10, "a", "as");
-        queue.push(9, "a", "as");
-        queue.push(12, "a", "as");
-        queue.push(0, "a", "as");
+        PriorityQueuePro queue = new PriorityQueuePro();
+        queue.push(new NodePair("sour", "a", 1));
+        queue.push(new NodePair("sour", "a", 2));
+        queue.push(new NodePair("sour", "a", 3));
+        queue.push(new NodePair("sour", "a", 4));
         System.out.println(queue);
     }
 }
