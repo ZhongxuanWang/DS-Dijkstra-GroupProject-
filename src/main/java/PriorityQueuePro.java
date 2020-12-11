@@ -34,11 +34,19 @@ public class PriorityQueuePro {
         return r;
     }
 
-    public void clear() {queue.clear();}
+    public void clear() {
+        System.out.println("A Clear operation just executed.\nnull");
+        queue.clear();
+    }
 
     public NodePair peek() {return queue.peek();}
 
-    public NodePair poll() {return queue.poll();}
+    public NodePair poll() {
+        NodePair polled = queue.poll();
+        System.out.println("A Poll operation just executed: " + polled);
+        display();
+        return polled;
+    }
 
     @Override
     public String toString() {
