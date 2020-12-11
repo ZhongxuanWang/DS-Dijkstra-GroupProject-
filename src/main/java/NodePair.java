@@ -26,6 +26,15 @@ class NodePair implements Comparable<NodePair>{
     }
 
     @Override
+    public String toString() {
+        return "NodePair{" +
+                "dis=" + dis +
+                ", source='" + source + '\'' +
+                ", target='" + target + '\'' +
+                '}';
+    }
+
+    @Override
     public int compareTo(NodePair o) {
         return Integer.compare(dis, o.dis);
     }
