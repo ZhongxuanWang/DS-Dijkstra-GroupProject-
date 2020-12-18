@@ -18,9 +18,10 @@ public class PriorityQueuePro {
         if (!updated[0])
             queue.add(pair);
 
-        if (Main.debug)
+        if (Main.debug) {
             System.out.println("A Pushing operation just executed: " + pair);
             display();
+        }
     }
 
     public void display() {
@@ -29,8 +30,10 @@ public class PriorityQueuePro {
 
     public boolean remove(NodePair pair) {
         boolean r = queue.remove(pair);
-        System.out.println("A Removal operation just executed: " + pair);
-        display();
+        if (Main.debug) {
+            System.out.println("A Removal operation just executed: " + pair);
+            display();
+        }
         return r;
     }
 
@@ -43,8 +46,10 @@ public class PriorityQueuePro {
 
     public NodePair poll() {
         NodePair polled = queue.poll();
-        System.out.println("A Poll operation just executed: " + polled);
-        display();
+        if (Main.debug) {
+            System.out.println("A Poll operation just executed: " + polled);
+            display();
+        }
         return polled;
     }
 

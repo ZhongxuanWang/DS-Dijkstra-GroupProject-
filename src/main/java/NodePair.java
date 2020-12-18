@@ -1,22 +1,11 @@
 class NodePair implements Comparable<NodePair>{
 
     int dis;
-    String source;
-    String target;
+    String name;
 
-    NodePair(String source, String target, int dis) {
-        this.source = source;
-        this.target = target;
+    NodePair(String name, int dis) {
+        this.name = name;
         this.dis = dis;
-    }
-
-    /**
-     * Precondition: assume o is a pair
-     * @param o another
-     * @return another
-     */
-    public String another(String o) {
-        return o.equals(source) ? target : source;
     }
 
     @Override
@@ -24,22 +13,21 @@ class NodePair implements Comparable<NodePair>{
         if (this == o) return true;
         if (!(o instanceof NodePair)) return false;
         NodePair nodePair = (NodePair) o;
-        return source.equals(nodePair.source) && target.equals(nodePair.target);
+        return name.equals(nodePair.name);
     }
 
     @Override
     public int hashCode() {
         // The multiple of 7 here just to help us generate a more unique hashcode,
         //  try to avoid hash collision in our hashmap.
-        return this.source.hashCode() * 7  + this.target.hashCode() + this.dis * 11;
+        return this.name.hashCode() * 7 + this.dis * 11;
     }
 
     @Override
     public String toString() {
         return "NodePair{" +
-                "dis=" + dis +
-                ", source='" + source + '\'' +
-                ", target='" + target + '\'' +
+                "source='" + name + '\'' +
+                ", dis=" + dis +
                 '}';
     }
 

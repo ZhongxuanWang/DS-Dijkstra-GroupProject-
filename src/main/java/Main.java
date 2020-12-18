@@ -3,10 +3,13 @@ import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultUndirectedGraph;
 
 public class Main {
-    final public static boolean debug = true; // If the hw is under grading, please leave it as true!
+    final public static boolean debug = false; // If the hw is under grading, please leave it as true!
+    final public static boolean JUMP_TO_DIJKSTRA = true; // If you want to jump to dijkstra, set it as true
 
     public static boolean stop = false;
     public static Map map;
+
+    public static Dijkstra dijkstra;
 
     public static void main(String[] args) throws IOException {
 
@@ -19,7 +22,7 @@ public class Main {
             graph.addVertex(v);
         }
 
-        Dijkstra dijkstra  = new Dijkstra(graph, !debug);
+        dijkstra  = new Dijkstra(graph, !debug);
         map = dijkstra.map;
 
         System.out.println("Hello! Welcome to Dijkstra Project! ");
@@ -29,43 +32,51 @@ public class Main {
         System.out.println("Pretty amazing isn't ? \n" +
                 "-".repeat(70));
 
-
-        System.out.println("Select Your Preferable Mode!\n" +
-                "1. Me-as-a-navigator mode (for PrepWork/being bored only)\n" +
-                "2. Dijkstra-shortest-pathfinding mode");
-
-        if (getInput().equals("1")) {
-            System.out.println("You are now in the 1st Mode!");
-            while (!stop) {
-                int liveDistance = 0;
-                loop();
-                while (!stop) {
-                    map.liveSummary();
-
-                    String stringSet = map.availableRoutesSet();
-                    System.out.printf("Where would you wanna go?! (%s) \n", stringSet);
-                    String dest = getInput();
-
-                    if (!stringSet.contains(dest)) {
-                        System.out.println("No! Don't fool me!");
-                        continue;
-                    }
-                    map.goTo(dest);
-                }
-            }
+        if (JUMP_TO_DIJKSTRA) {
+            mode2();
         } else {
-            System.out.println("You are now in the 2nd Mode!");
-            while (!stop) {
-                loop();
-                dijkstra.findShortestPath();
-                map.summary();
-                System.out.println("-".repeat(70));
+            System.out.println("Select Your Preferable Mode!\n" +
+                    "1. Me-as-a-navigator mode (for PrepWork/being bored only)\n" +
+                    "2. Dijkstra-shortest-pathfinding mode");
+            if (getInput().equals("1")) {
+                mode1();
+            } else {
+                mode2();
             }
         }
 
-
-
         System.out.println("Finished. Thank you!");
+    }
+
+    public static void mode1() {
+        System.out.println("You are now in the 1st Mode!");
+        while (!stop) {
+            int liveDistance = 0;
+            loop();
+            while (!stop) {
+                map.liveSummary();
+
+                String stringSet = map.availableRoutesSet();
+                System.out.printf("Where would you wanna go?! (%s) \n", stringSet);
+                String dest = getInput();
+
+                if (!stringSet.contains(dest)) {
+                    System.out.println("No! Don't fool me!");
+                    continue;
+                }
+                map.goTo(dest);
+            }
+        }
+    }
+
+    public static void mode2() {
+        System.out.println("You are now in the 2nd Mode!");
+        while (!stop) {
+            loop();
+            dijkstra.findShortestPath();
+            map.summary();
+            System.out.println("-".repeat(70));
+        }
     }
 
     public static void loop() {
