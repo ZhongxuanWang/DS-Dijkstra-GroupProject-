@@ -1,3 +1,4 @@
+@Deprecated
 class Node {
     Node next;
     int distance;
