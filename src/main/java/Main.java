@@ -3,7 +3,7 @@ import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultUndirectedGraph;
 
 public class Main {
-    final public static boolean debug = false; // If the hw is under grading, please leave it as true!
+    final public static boolean debug = true; // If the hw is under grading, please leave it as true!
     final public static boolean JUMP_TO_DIJKSTRA = true; // If you want to jump to dijkstra, set it as true
 
     public static boolean stop = false;
@@ -11,7 +11,7 @@ public class Main {
 
     public static Dijkstra dijkstra;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         Graph<String, DistanceEdge> graph = new DefaultUndirectedGraph<>(DistanceEdge.class);
         for (String v : new String[] {

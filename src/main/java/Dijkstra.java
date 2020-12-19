@@ -16,46 +16,48 @@ public class Dijkstra {
 
     public void findShortestPath(String origin, String target) {
         map.dijkstraSwitch = true;
-        PriorityQueuePro queue = new PriorityQueuePro();
+        // PriorityQueuePro queue = new PriorityQueuePro();
         String placeNow = origin;
 
         HashSet<String> knownPairs = new HashSet<>(12,2);
+        HashMap<String, Integer> lastDistances = new HashMap<>(12,2);
         knownPairs.add(placeNow);
 
-        // HashMap<String, Integer> cost = new HashMap<>(12, 2);
+        HashMap<String, Integer> cmap = new HashMap<>(12, 2);
 
         boolean c = true; // continue
         String lastNode = "";
         int lastDis = 0;
 
-        while (c) {
-            c = false;
+        while (knownPairs.size() != 12) {
 
-            // PriorityQueuePro adjacentQueue = new PriorityQueuePro();
+            PriorityQueuePro adjacentQueue = new PriorityQueuePro();
 
             for (DistanceEdge edge: map.graph.edgesOf(placeNow)) {
 
                 String another = edge.getAnother(placeNow);
 
-                int cost = edge.dis;
-
                 if (knownPairs.contains(another))
                     continue;
 
-                c = true;
+                int cost = edge.dis;
 
                 NodePair pair = new NodePair(another, cost + lastDis);
 
-                queue.push(pair);
+                adjacentQueue.push(pair);
+
+                if (cmap.getOrDefault(placeNow, 1) == 1 || cmap.get(placeNow) > cost) {
+                    cmap.put(placeNow, cost);
+                }
             }
-            // select the smallest distance
-            NodePair n = minAdjNode(queue, knownPairs);
-            if (n == null) break;
-            placeNow = n.name;
+
+            if (adjacentQueue.queue.isEmpty()) continue;
+            // TODO I Should expect to change lastDis, when nodes information is modified
+            System.out.println(placeNow);
             knownPairs.add(placeNow);
-
-            lastDis = queue.peek().dis;
-
+            lastDis += adjacentQueue.peek().dis;
+            placeNow = adjacentQueue.peek().name;
+            System.out.println(cmap);
         }
 
 

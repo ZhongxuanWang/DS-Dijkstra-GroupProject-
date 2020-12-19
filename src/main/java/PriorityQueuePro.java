@@ -5,27 +5,44 @@ public class PriorityQueuePro {
 
     public PriorityQueuePro() {}
 
+    // O(3N...)
     public void push(NodePair pair) {
-        // Java lambda + final array to exchange result
-        final boolean[] updated = new boolean[1];
+        // That's old --> // Java lambda + final array to exchange result
+        final boolean[] updated = new boolean[2];
         queue.forEach((nodePair -> {
             if (nodePair.equals(pair)) {
-                nodePair.dis = Math.min(pair.dis, nodePair.dis);
-                updated[0] = true;
+                updated[1] = true;
+                if (pair.dis < nodePair.dis) {
+                    updated[0] = true;
+                }
             }
         }));
 
-        if (!updated[0])
+        if (updated[0]) {
+            queue.remove(pair);
             queue.add(pair);
+        } else if (!updated[1]){
+            queue.add(pair);
+        }
 
         if (Main.debug) {
             System.out.println("A Pushing operation just executed: " + pair);
-            display();
+            // display();
         }
     }
 
-    public void display() {
-        System.out.println(queue);
+    public synchronized void display() {
+        // System.out.println(queue);
+        displayUsingBackTracking();
+    }
+
+    public synchronized void displayUsingBackTracking() {
+        if (queue.isEmpty()) return;
+
+        NodePair pair = queue.poll();
+        System.out.println(pair);
+        displayUsingBackTracking();
+        queue.add(pair);
     }
 
     public boolean remove(NodePair pair) {
