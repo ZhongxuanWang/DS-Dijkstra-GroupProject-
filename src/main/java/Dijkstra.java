@@ -21,7 +21,7 @@ public class Dijkstra {
 
         HashSet<String> knownPairs = new HashSet<>(12,2);
         HashMap<String, Integer> lastDistances = new HashMap<>(12,2);
-        knownPairs.add(placeNow);
+        // knownPairs.add(placeNow);
 
         HashMap<String, Integer> cmap = new HashMap<>(12, 2);
 
@@ -29,8 +29,8 @@ public class Dijkstra {
         String lastNode = "";
         int lastDis = 0;
 
+        a:
         while (knownPairs.size() != 12) {
-
             PriorityQueuePro adjacentQueue = new PriorityQueuePro();
 
             for (DistanceEdge edge: map.graph.edgesOf(placeNow)) {
@@ -46,19 +46,26 @@ public class Dijkstra {
 
                 adjacentQueue.push(pair);
 
-                if (cmap.getOrDefault(placeNow, 1) == 1 || cmap.get(placeNow) > cost) {
-                    cmap.put(placeNow, cost);
-                }
+                if (cmap.getOrDefault(another, 1) == 1 || cmap.get(another) > cost + lastDis)
+                    cmap.put(another, cost + lastDis);
+
             }
 
-            if (adjacentQueue.queue.isEmpty()) continue;
-            // TODO I Should expect to change lastDis, when nodes information is modified
-            System.out.println(placeNow);
+            if (adjacentQueue.queue.isEmpty()) {
+                for (String vertex : map.allNodes) {
+                    if (!knownPairs.contains(vertex)) {
+                        placeNow = vertex;
+                        knownPairs.add(placeNow);
+                        continue a;
+                    }
+                }
+            }
             knownPairs.add(placeNow);
-            lastDis += adjacentQueue.peek().dis;
+            lastDis = adjacentQueue.peek().dis;
             placeNow = adjacentQueue.peek().name;
-            System.out.println(cmap);
         }
+
+        System.out.printf("Cmap: %s\n", cmap);
 
 
 

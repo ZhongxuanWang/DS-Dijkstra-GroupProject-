@@ -1,6 +1,6 @@
-import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.*;
 
-class DistanceEdge extends DefaultEdge {
+class DistanceEdge extends DefaultWeightedEdge implements Comparable<DistanceEdge>{
     public final int dis;
 
     public DistanceEdge(int distance) {
@@ -32,4 +32,13 @@ class DistanceEdge extends DefaultEdge {
         return null;
     }
 
+    @Override
+    protected double getWeight() {
+        return this.dis;
+    }
+
+    @Override
+    public int compareTo(DistanceEdge o) {
+        return Integer.compare(dis, o.dis);
+    }
 }

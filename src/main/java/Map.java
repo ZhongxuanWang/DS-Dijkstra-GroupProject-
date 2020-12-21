@@ -1,7 +1,7 @@
 import org.jgrapht.Graph;
 import org.jgrapht.Graphs;
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
-import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
+import org.jgrapht.alg.shortestpath.BellmanFordShortestPath;
 import org.jgrapht.graph.DefaultUndirectedGraph;
 import org.jgrapht.traverse.DepthFirstIterator;
 
@@ -16,6 +16,11 @@ public class Map {
     int total_dis = 0;
     Graph<String, DistanceEdge> graph = new DefaultUndirectedGraph<>(DistanceEdge.class);
     ConnectivityInspector<String, DistanceEdge> inspector = new ConnectivityInspector<>(graph);
+    String[] allNodes = {
+            "A", "B", "C", "D", "E",
+            "F", "G", "H", "I", "J",
+            "K", "L"
+    };
     String start = "";
     String end = "";
     String now = "";
@@ -85,11 +90,19 @@ public class Map {
             System.out.println("Hey! Haven't ran our Dijkstra yet, why would you want our summary!? ");
             return;
         }
-        DijkstraShortestPath<String, DistanceEdge> dijkstraAlg = new DijkstraShortestPath<>(graph);
+
+        /**
+         *  *** I HAVE TO MAKE THIS NOTE  *BIG*  AND  *CLEAR*
+         *      - Dijkstra Shortest Path implementation always give a false value (16). Instead treating the paths
+         *      as weighted, Dijkstra refused to do so and treated paths unweighted.
+         *      - However, my mission is to calculate the shortest distance. So, I would use this algorithm instead....
+         **/
+
+        BellmanFordShortestPath<String, DistanceEdge> dijkstraAlg = new BellmanFordShortestPath<>(graph);
 
         int total_dis_jgrapht = 0;
 
-        for (DistanceEdge edge : dijkstraAlg.getPaths(start).getPath(end).getEdgeList()) {
+        for (DistanceEdge edge : dijkstraAlg.getPath(start, end).getEdgeList()) {
             total_dis_jgrapht += edge.dis;
         }
         System.out.println("-".repeat(70));
