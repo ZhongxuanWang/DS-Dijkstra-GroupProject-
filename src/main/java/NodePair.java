@@ -2,10 +2,12 @@ class NodePair implements Comparable<NodePair>{
 
     int dis;
     String name;
+    String from;
 
-    NodePair(String name, int dis) {
+    NodePair(String name, int dis, String from) {
         this.name = name;
         this.dis = dis;
+        this.from = from;
     }
 
     @Override
@@ -26,7 +28,8 @@ class NodePair implements Comparable<NodePair>{
     @Override
     public String toString() {
         return "NodePair{" +
-                "source='" + name + '\'' +
+                "from:" + this.from +
+                ", to:" + name +
                 ", dis=" + dis +
                 '}';
     }
