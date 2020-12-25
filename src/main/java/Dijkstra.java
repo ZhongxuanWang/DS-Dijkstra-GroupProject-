@@ -16,10 +16,6 @@ public class Dijkstra {
     }
 
 
-    /**
-     * Our unique solution, with neither reliance nor reference on outer codes on much others, except about what is dijkstra,
-     * and this: https://www.cs.usfca.edu/~galles/visualization/Dijkstra.html
-     */
     public void findShortestPath(String origin, String target) {
         map.dijkstraSwitch = true;
         // PriorityQueuePro queue = new PriorityQueuePro();
@@ -41,58 +37,46 @@ public class Dijkstra {
             adjacentQueues[i] = new PriorityQueuePro();
         }
         boolean test = false;
-        a:
         while (knownPairs.size() != 12) {
-            test = true;
-
-            PriorityQueuePro adjacentQueue = adjacentQueues[str2Ind(placeNow)];
-            knownPairs.add(placeNow);
-
-            PriorityQueuePro thisQueue = new PriorityQueuePro();
-
+            PriorityQueuePro tempQueue = new PriorityQueuePro();
             for (DistanceEdge edge: map.graph.edgesOf(placeNow)) {
+                String thisNode = edge.getAnother(placeNow);
+                if (knownPairs.contains(thisNode)) continue;
+                int distance = edge.dis;
 
-                String another = edge.getAnother(placeNow);
+                NodePair pair = new NodePair(thisNode, distance + lastDis, placeNow);
 
-                if (knownPairs.contains(another))
-                    continue;
+                tempQueue.push(pair);
 
-                test = false;
-
-                int cost = edge.dis;
-
-                NodePair pair = new NodePair(another, cost + lastDis, placeNow);
-
-                thisQueue.push(pair);
-
-                if (cmap.getOrDefault(another, 1) == 1 || cmap.get(another) > cost + lastDis)
-                    cmap.put(another, cost + lastDis);
 
             }
 
-            if (test) {
-                for (String vertex : map.allNodes) {
-                    if (!knownPairs.contains(vertex)) {
-                        // lastDis = adjacentQueues[str2Ind(vertex)].peek().dis;
-                        lastDis = 0;
-                        placeNow = vertex;
-                        // knownPairs.add(placeNow);
-                        continue a;
+            if (tempQueue.queue.isEmpty()) {
+                for (String node : map.allNodes) {
+                    if (!knownPairs.contains(node)) {
+                        placeNow = node;
+                        knownPairs.add(placeNow);
+                        break;
                     }
                 }
-            }
-            if (!thisQueue.queue.isEmpty()) {
-                adjacentQueues[str2Ind(placeNow)].push(thisQueue.peek());
-                lastDis = thisQueue.peek().dis;
-                placeNow = thisQueue.peek().name;
+                System.out.println("Oops");
+            } else {
+                placeNow = tempQueue.peek().name;
+                int distance = tempQueue.peek().dis;
+
+                // update the big map
+                if (cmap.getOrDefault(placeNow, -1) == -1) {
+                    cmap.put(placeNow, distance);
+                } else if (cmap.get(placeNow) > distance + lastDis) {
+                    cmap.put(placeNow, distance + lastDis);
+                }
+
+                lastDis = distance;
+
                 knownPairs.add(placeNow);
             }
         }
-
         System.out.printf("Cmap: %s\n", cmap);
-
-
-
     }
     public void findShortestPath() {
         findShortestPath(map.start, map.end);

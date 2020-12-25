@@ -15,7 +15,7 @@ class NodePair implements Comparable<NodePair>{
         if (this == o) return true;
         if (!(o instanceof NodePair)) return false;
         NodePair nodePair = (NodePair) o;
-        return name.equals(nodePair.name);
+        return name.equals(nodePair.name) && from.equals(nodePair.from);
     }
 
     @Override
