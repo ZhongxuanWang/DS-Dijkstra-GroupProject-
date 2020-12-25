@@ -2,9 +2,9 @@ class NodePair implements Comparable<NodePair>{
 
     int dis;
     String name;
-    String from;
+    NodePair from;
 
-    NodePair(String name, int dis, String from) {
+    NodePair(String name, int dis, NodePair from) {
         this.name = name;
         this.dis = dis;
         this.from = from;
@@ -15,7 +15,7 @@ class NodePair implements Comparable<NodePair>{
         if (this == o) return true;
         if (!(o instanceof NodePair)) return false;
         NodePair nodePair = (NodePair) o;
-        return name.equals(nodePair.name) && from.equals(nodePair.from);
+        return name.equals(nodePair.name);
     }
 
     @Override
@@ -27,11 +27,16 @@ class NodePair implements Comparable<NodePair>{
 
     @Override
     public String toString() {
-        return "NodePair{" +
-                "from:" + this.from +
+        String from;
+        if (this.from == null)
+            from = "null";
+        else
+            from = this.from.name;
+        return  PriorityQueuePro.ANSI_YELLOW + "NodePair{" +
+                "from:" + from +
                 ", to:" + name +
                 ", dis=" + dis +
-                '}';
+                '}' + PriorityQueuePro.ANSI_RESET;
     }
 
     @Override
